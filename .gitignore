@@ -1,0 +1,15 @@
+# Data directories: keep structure, ignore contents
+/data/*
+!/data/.gitkeep
+!/data/00_src/
+/data/00_src/*
+!/data/00_src/.gitkeep
+
+# Derived data and outputs
+data/01_raw
+data/metric_stats
+data/plots
+data/*.csv
+
+# Editor settings
+.vscode
