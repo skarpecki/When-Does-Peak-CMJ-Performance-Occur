@@ -8,7 +8,7 @@ Source code and notebook workflow used in the research paper to prepare Hawkin D
 - `data/01_raw/` – combined intermediate CSVs (auto-created)
 - `data/plots/`, `data/metric_stats/` – generated figures and stats
 - `data/athletes.csv` – required athlete metadata (`athlete_name,sex,height_cm`)
-- `requirements.txt` – Python dependencies (`matplotlib`, `numpy`, `polars`)
+- `requirements.txt` – Python dependencies (`matplotlib`, `numpy`, `polars`, `scipy`)
 
 ## Setup
 - Python 3.x with `pip install -r requirements.txt`
@@ -27,6 +27,7 @@ Source code and notebook workflow used in the research paper to prepare Hawkin D
 6) **Session stats & demographics**: `add_mrsi_session_stats` adds max/avg mRSI per session; `add_sex_height_from_csv` joins metadata. Per-athlete z-scores (abs values) are computed for all metrics and saved to `data/filtered_data.csv`.
 7) **Select best session**: `best_session_ever` picks each athlete’s session with the highest `max_mrsi_in_session`, writing `data/best_session_per_athlete.csv`.
 8) **Outlier handling and plots**: for each metric in `METRICS_CONFIG`, rows beyond ±4 SD in the z-score are dropped, best reps per athlete are chosen, and `plot_raincloud` produces PNG + CSV + stats per metric (e.g., `data/plots/jump_height_m/CMJ_jump_height_m_raincloud.png`). Summary CSVs land in `data/plots/all_summary.csv` and `data/plots/outliers_summary.csv`. Panel images are assembled under `data/plots/raincloud_panels/`.
+9) **Chi-square + effect size**: for each metric’s best-rep distribution across trials, a chi-square goodness-of-fit test (df=5 for six reps) plus Bonferroni-adjusted p-value and Cramer's V are computed. Per-metric results are saved to `data/plots/<metric>/CMJ_<metric>_chi2.csv`, aggregated across metrics in `data/plots/chi2_summary.csv`, and echoed to `data/pipeline_stats.log`.
 
 ## Customization tips
 - Adjust drop lists, thresholds, metric list, and `RECALCULATE_Z_SCORE` in the config/plot cells to match your protocol.
